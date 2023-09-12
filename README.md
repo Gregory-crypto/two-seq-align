@@ -46,3 +46,42 @@ Output:
 
 ['CACACAGTGACTAGCTAGCTACGATC', 'CACACAGTGACTAGCTAGCACGATC']
 ```
+
+## `find_target()` function
+
+The code is a Python function called `find_target()`, which finds all target sequences in a given sequence, given the PAM sequence and PAM orientation. The function takes four arguments:
+
+* `seq`: The sequence to be searched.
+* `pam`: The PAM sequence.
+* `pam_ori`: The PAM orientation, either `L` (left) or `R` (right).
+* `len_tar`: The length of the target sequence.
+
+The function returns a list of all target sequences found in the input sequence.
+
+The `find_target()` function works by first creating a regular expression for the PAM sequence, using the `re.search()` function. The regular expression takes into account the PAM orientation, and allows for ambiguity in the PAM sequence by using the base dictionary defined in the function.
+
+Once the regular expression has been created, the `find_target()` function iterates over the input sequence, searching for matches to the PAM sequence. If a match is found, the function checks to see if the target sequence is long enough. If it is, the function adds the target sequence to the list of target sequences.
+
+The `find_target()` function also searches for target sequences in the reverse complement of the input sequence. This is because some CRISPR-Cas systems can recognize target sequences in either orientation.
+
+Here is an example of how to use the `find_target()` function:
+
+```python
+import find_target
+
+seq = "TAGCTACGATCGATCGTTTCTAGCTACGATGCAAGAAAGATCGATCGATCGACGTACG"
+pam = "YTTN"
+pam_ori = "L"
+target_length = 21
+
+target_list = find_target(seq, pam, pam_ori, target_length)
+
+print(target_list)
+```
+
+Output:
+
+```
+['TAGCTACGATGCAAGAAAGAT', 'CTTGCATCGTAGCTAGAAACG', 'TTGCATCGTAGCTAGAAACGA', 'CATCGTAGCTAGAAACGATCG']
+```
+
