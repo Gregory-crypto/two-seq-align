@@ -87,3 +87,8 @@ def align(seqi, seqii):
     # Columns & rows
 
     return [al_seqi, al_seqii]
+
+# seq1 = 'CACACAGTGACTAGCTAGCTACGATC'
+# seq2 = 'CACACAGTCGACTAGCTAGCACGATC'
+
+# print(align(seq1, seq2))
