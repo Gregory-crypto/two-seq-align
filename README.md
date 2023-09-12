@@ -1,4 +1,4 @@
-## `Align()` function
+## `align()` function
 
 The code is a Python function called `align()`, which performs **Needleman-Wunsch sequence alignment** on two input sequences. Needleman-Wunsch is a global alignment algorithm, which means that it finds the optimal alignment between two sequences over their entire lengths.
 
