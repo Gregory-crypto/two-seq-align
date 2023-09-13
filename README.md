@@ -85,3 +85,58 @@ Output:
 ['TAGCTACGATGCAAGAAAGAT', 'CTTGCATCGTAGCTAGAAACG', 'TTGCATCGTAGCTAGAAACGA', 'CATCGTAGCTAGAAACGATCG']
 ```
 
+## `reverse_primer()` function
+
+This program is a function called `get_reverse_primer()` that takes in a sequence of DNA, a forward primer, the desired length of the reverse primer, the minimum and maximum amplicon sizes, and the minimum and maximum melting temperatures (TM) as input. The function then outputs the reverse primer that meets all of the specified criteria.
+
+The function first preprocesses the sequence by converting it to uppercase, removing the forward primer, and ensuring that the reverse primer is at least `min_amp` nucleotides long and no more than `max_amp` nucleotides long. The function then reverses the sequence and calculates the GC content, TM, and self-complementarity of the first `prim_leng` nucleotides. If these values meet all of the specified criteria, the function returns the first `prim_leng` nucleotides as the reverse primer.
+
+If the first `prim_leng` nucleotides do not meet all of the criteria, the function iterates through the sequence, starting from the second nucleotide, and calculating the GC content, TM, and self-complementarity of the `i+1` to `i+prim_leng` nucleotides. If these values meet all of the specified criteria, the function returns the `i+1` to `i+prim_leng` nucleotides as the reverse primer.
+
+If no reverse primer can be found that meets all of the specified criteria, the function returns `False`.
+
+Here is a more detailed explanation of each function:
+
+* `isnt_comp()` checks if the reverse primer is not self-complementary. This is done by creating a reversed sequence of the reverse primer and then checking if it is a substring of the reverse primer.
+* `gc_check()` checks if the GC content of the reverse primer is within the specified range.
+* `tm_check()` checks if the TM of the reverse primer is within the specified range.
+* `get_reverse_primer()` is the main function of the program. It takes in all of the input parameters and then calls the other functions to find the reverse primer that meets all of the specified criteria.
+
+
+Here is an example of how to use the `get_reverse_primer()` function:
+
+```python
+import get_reverse_primer
+
+seq = "ATTATCGATCGATCAGTATATATCGCGCGCGATATATGCATCGATCGATCGACTAGCTACGA"
+fprimer = "ATATCGCGCGCGATATATGC"
+prim_leng = 20
+min_amp = 30
+max_amp = 50
+
+print(get_reverse_primer(seq, fprimer, prim_leng, min_amp, max_amp))
+```
+
+Output:
+
+```
+AGCTAGTCGATCGATCGATG
+```
+
+```python
+import get_reverse_primer
+
+seq = "ATTATCGATCGATCAGTATATATCGCGCGCGATATATGCATCGATCGATCGACTAGCTACGA"
+fprimer = "ATATCGCGCGCGATATATGC"
+prim_leng = 20
+min_amp = 40
+max_amp = 100
+
+print(get_reverse_primer(seq, fprimer, prim_leng, min_amp, max_amp))
+```
+
+Output:
+
+```
+False
+```
