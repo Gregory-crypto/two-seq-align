@@ -105,6 +105,8 @@ Here is a more detailed explanation of each function:
 
 Here is an example of how to use the `get_reverse_primer()` function:
 
+Input:
+
 ```python
 import get_reverse_primer
 
@@ -122,6 +124,7 @@ Output:
 ```
 AGCTAGTCGATCGATCGATG
 ```
+Input:
 
 ```python
 import get_reverse_primer
