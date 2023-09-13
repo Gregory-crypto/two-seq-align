@@ -85,7 +85,72 @@ Output:
 ['TAGCTACGATGCAAGAAAGAT', 'CTTGCATCGTAGCTAGAAACG', 'TTGCATCGTAGCTAGAAACGA', 'CATCGTAGCTAGAAACGATCG']
 ```
 
-## `reverse_primer()` function
+## `get_primer()` function
+
+The program is a Python function that designs a primer for a DNA sequence. The function takes the following parameters:
+
+* `seq`: The DNA sequence to design a primer for.
+* `prim_leng`: The desired length of the primer.
+* `min_gc`: The minimum GC content of the primer.
+* `max_gc`: The maximum GC content of the primer.
+* `min_t`: The minimum melting temperature of the primer.
+* `max_t`: The maximum melting temperature of the primer.
+* `max_comp`: The maximum number of consecutive complementary bases allowed in the primer.
+
+The function first preprocesses the DNA sequence by converting it to uppercase and getting its length. It then starts by checking if the first `prim_leng` bases of the sequence meet the desired criteria. If they do, the function returns the first `prim_leng` bases of the sequence. Otherwise, the function iterates through the sequence, one base at a time, and checks if the next `prim_leng` bases starting from that base meet the desired criteria. If they do, the function returns the next `prim_leng` bases starting from that base. If no bases in the sequence meet the desired criteria, the function returns `False`.
+
+The following is a breakdown of the function's steps:
+
+1. The `isnt_comp()` function checks if a primer sequence contains any consecutive complementary bases. This is done by first creating a dictionary that maps each base to its complement (A -> T, T -> A, G -> C, and C -> G). The function then reverses the last `max_comp` bases of the primer sequence and checks if it is a substring of the primer sequence. If it is, the function returns `False`. Otherwise, the function returns `True`.
+2. The `gc_check()` function checks if the GC content of a primer sequence is within the specified range. The function does this by first getting the number of G and C bases in the primer sequence. It then divides this number by the length of the primer sequence and multiplies by 100 to get the GC content as a percentage. If the GC content is within the specified range, the function returns `True`. Otherwise, the function returns `False`.
+3. The `tm_check()` function checks if the melting temperature of a primer sequence is within the specified range. The melting temperature of a primer sequence is determined by its GC content and length. The function uses the following formula to calculate the melting temperature:
+
+```
+Tm = 64.9 + 41 * (GC content - 16.4) / primer length
+```
+
+If the melting temperature is within the specified range, the function returns `True`. Otherwise, the function returns `False`.
+
+4. The `get_primer()` function first calls the `isnt_comp()` function to check if the first `prim_leng` bases of the sequence meet the complementary base requirement. If they do, the function returns the first `prim_leng` bases of the sequence. Otherwise, the function enters a loop.
+
+5. In each iteration of the loop, the function calls the `gc_check()` and `tm_check()` functions to check if the next `prim_leng` bases starting from the current base meet the GC content and melting temperature requirements. If they do, the function returns the next `prim_leng` bases starting from the current base.
+
+6. If the loop terminates without finding a primer sequence that meets all of the requirements, the function returns `False`.
+
+Here is an example of how to use the `get_primer()` function:
+
+```python
+import get_primer
+
+seq = 'TAGCATGCATCGATCGACTAGCTACGATCGATCGACTAATTACTACGGCCGCGATCGACCGTACTAATCGATCATGTAATATTACGATCGAT'
+prim_leng = 21
+
+print(get_primer(seq, prim_leng))
+```
+
+Output:
+
+```
+AGCATGCATCGATCGACTAGC
+```
+
+```python
+import get_primer
+
+seq = 'ATATATATCGATGCTATATGCGCTATATACTGACTAGCATCGATCGATATAAAA'
+prim_leng = 20
+
+print(get_primer(seq, prim_leng))
+```
+
+Output:
+
+```
+False
+```
+
+
+## `get_reverse_primer()` function
 
 This program is a function called `get_reverse_primer()` that takes in a sequence of DNA, a forward primer, the desired length of the reverse primer, the minimum and maximum amplicon sizes, and the minimum and maximum melting temperatures (TM) as input. The function then outputs the reverse primer that meets all of the specified criteria.
 
